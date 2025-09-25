@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Funcionários Terceirizados - Sistema Automático</title>
+    <!-- SheetJS Library for Excel file reading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px 40px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.05) 10px,
+                rgba(255, 255, 255, 0.05) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 25px 35px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 1em;
+            opacity: 0.8;
+        }
+
+        .controls-section {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            border-bottom: 3px solid #e9ecef;
+        }
+
+        .file-upload-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .status-message {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .search-container {
+            margin-top: 20px;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .area-section {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .area-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .area-title {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 30px 40px;
+            margin: 0;
+            font-size: 2em;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .area-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #e74c3c, #f39c12, #27ae60);
+        }
+
+        .service-description {
+            background: #ecf0f1;
+            padding: 25px 40px;
+            font-size: 1.2em;
+            color: #2c3e50;
+            font-weight: 500;
+            border-left: 5px solid #3498db;
+        }
+
+        .locations-line {
+            background: #d5dbdb;
+            padding: 20px 40px;
+            font-size: 1.1em;
+            color: #34495e;
+            font-weight: 600;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .employees-section {
+            padding: 40px;
+        }
+
+        .employees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .employee-item {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .employee-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, #3498db, #e74c3c);
+        }
+
+        .employee-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: #3498db;
+        }
+
+        .employee-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1em;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+        }
+
+        .employee-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2c3e50;
+            line-height: 1.4;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 60px;
+            color: #667eea;
+        }
+
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffeaa7, #fdcb6e) !important;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #00b894, #00a085);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 184, 148, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px 10px;
+                border-radius: 20px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+
+            .stat-item {
+                padding: 15px 20px;
+            }
+
+            .controls-section {
+                padding: 20px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .area-title {
+                padding: 20px 25px;
+                font-size: 1.6em;
+            }
+
+            .service-description {
+                padding: 20px 25px;
+                font-size: 1.1em;
+            }
+
+            .locations-line {
+                padding: 15px 25px;
+                font-size: 1em;
+            }
+
+            .employees-section {
+                padding: 25px;
+            }
+
+            .employees-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .employee-item {
+                padding: 20px;
+            }
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            color: #6c757d;
+            border-top: 3px solid #e9ecef;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>📋 Funcionários Terceirizados</h1>
+                <p>Sistema Automático de Gestão - Estrutura Por Tipo de Serviço e Locais</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalEmployees">0</span>
+                        <span class="stat-label">Funcionários</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalAreas">0</span>
+                        <span class="stat-label">Áreas Ativas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalLocations">0</span>
+                        <span class="stat-label">Locais Únicos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-section">
+            <div class="file-upload-container">
+                <input type="file" id="excelFiles" class="file-input" multiple accept=".xlsx,.xls">
+                <button class="upload-btn" onclick="document.getElementById('excelFiles').click()">
+                    📁 Selecionar Planilhas Excel
+                </button>
+                <span style="color: #6c757d; font-style: italic;">
+                    Selecione as 9 planilhas dos funcionários terceirizados
+                </span>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-box" id="searchInput" placeholder="🔍 Buscar funcionário por nome, área ou local...">
+            </div>
+            
+            <div class="status-message" id="statusMessage"></div>
+        </div>
+
+        <div class="loading" id="loadingDiv">
+            <div class="loading-spinner"></div>
+            <p><strong>Processando planilhas...</strong></p>
+            <p>Aguarde um momento enquanto organizamos os dados</p>
+        </div>
+
+        <div class="content" id="mainContent">
+            <div style="text-align: center; padding: 80px 40px; color: #6c757d;">
+                <h3>📊 Carregue as Planilhas para Começar</h3>
+                <p style="margin-top: 15px; font-size: 1.1em;">
+                    Selecione as 9 planilhas Excel dos funcionários terceirizados para gerar automaticamente todas as seções organizadas.
+                </p>
+                <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #667eea;">
+                    <strong>Planilhas esperadas:</strong><br>
+                    • Bombeiro Civil.xlsx<br>
+                    • Serviço de copa.xlsx<br>
+                    • Serviço de Limpeza nos prédios.xlsx<br>
+                    • Serviço de locação de veículos.xlsx<br>
+                    • Serviço de recepção.xlsx<br>
+                    • Serviço de transporte do Gabinete.xlsx<br>
+                    • Serviço de vigilância eletrônica.xlsx<br>
+                    • Serviço de vigilância patrimonial.xlsx<br>
+                    • Serviços de manutenção de ar-condicionado.xlsx
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📅 Sistema atualizado automaticamente com base nas planilhas carregadas</p>
+            <p>💼 Sistema de Gerenciamento de Funcionários Terceirizados - Versão Automática</p>
+        </div>
+    </div>
+
+    <button class="print-btn" onclick="window.print()" title="Imprimir Lista">
+        🖨️ Imprimir
+    </button>
+
+    <script>
+        // Mapeamento dos arquivos para títulos das áreas
+        const areaMapping = {
+            'Bombeiro Civil.xlsx': 'Bombeiro Civil',
+            'Serviço de copa.xlsx': 'Serviços de Copa',
+            'Serviço de Limpeza nos prédios.xlsx': 'Serviços de Limpeza nos Prédios',
+            'Serviço de locação de veículos.xlsx': 'Serviços de Locação de Veículos',
+            'Serviço de recepção.xlsx': 'Serviços de Recepção',
+            'Serviço de transporte do Gabinete.xlsx': 'Serviços de Transporte do Gabinete',
+            'Serviço de vigilância eletrônica.xlsx': 'Serviços de Vigilância Eletrônica',
+            'Serviço de vigilância patrimonial.xlsx': 'Serviços de Vigilância Patrimonial',
+            'Serviços de manutenção de ar-condicionado.xlsx': 'Serviços de Manutenção de Ar-Condicionado'
+        };
+
+        // Descrições dos serviços
+        const serviceDescriptions = {
+            'Bombeiro Civil': 'Serviços de prevenção e combate a incêndios nos prédios',
+            'Serviços de Copa': 'Serviços de copa e cozinha nos prédios',
+            'Serviços de Limpeza nos Prédios': 'Serviços de limpeza e conservação predial',
+            'Serviços de Locação de Veículos': 'Serviços de locação e gestão de frota de veículos',
+            'Serviços de Recepção': 'Serviços de recepção e atendimento ao público',
+            'Serviços de Transporte do Gabinete': 'Serviços de transporte executivo e motoristas',
+            'Serviços de Vigilância Eletrônica': 'Serviços de monitoramento eletrônico e CCTV',
+            'Serviços de Vigilância Patrimonial': 'Serviços de segurança patrimonial e controle de acesso',
+            'Serviços de Manutenção de Ar-Condicionado': 'Serviços de manutenção preventiva e corretiva de sistemas de climatização'
+        };
+
+        let allEmployeeData = {};
+        let filteredData = {};
+
+        // Event listener para upload de arquivos
+        document.getElementById('excelFiles').addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+
+            showLoading(true);
+            showStatus('Processando planilhas...', 'info');
+            
+            allEmployeeData = {};
+            let processedFiles = 0;
+
+            files.forEach(file => {
+                processExcelFile(file).then(() => {
+                    processedFiles++;
+                    if (processedFiles === files.length) {
+                        generateHTML();
+                        updateStats();
+                        showLoading(false);
+                        showStatus(`✅ ${files.length} planilhas carregadas com sucesso!`, 'success');
+                    }
+                }).catch(error => {
+                    console.error(`Erro ao processar ${file.name}:`, error);
+                    processedFiles++;
+                    if (processedFiles === files.length) {
+                        generateHTML();
+                        updateStats();
+                        showLoading(false);
+                        showStatus('⚠️ Algumas planilhas podem não ter sido processadas corretamente.', 'error');
+                    }
+                });
+            });
+        });
+
+        // Função para processar arquivo Excel
+        async function processExcelFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    try {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        const sheetName = workbook.SheetNames[0];
+                        const worksheet = workbook.Sheets[sheetName];
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                        if (jsonData.length < 2) {
+                            resolve();
+                            return;
+                        }
+
+                        // Processar dados da planilha
+                        const processedData = parseSheetData(jsonData, file.name);
+                        if (processedData && processedData.employees.length > 0) {
+                            allEmployeeData[file.name] = processedData;
+                        }
+                        
+                        resolve();
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                
+                reader.onerror = () => reject(new Error(`Erro ao ler ${file.name}`));
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        // Função para analisar dados da planilha
+        function parseSheetData(data, fileName) {
+            if (data.length < 2) return null;
+
+            const headers = data[0].map(h => (h || '').toString().toLowerCase().trim());
+            
+            // Encontrar índices das colunas
+            const nameIndex = findColumnIndex(headers, ['nome', 'funcionario', 'employee', 'trabalhador']);
+            const titleIndex = findColumnIndex(headers, ['titulo', 'area', 'title', 'area-title', 'área']);
+            const locationIndex = findColumnIndex(headers, ['local', 'locais', 'location', 'locations-line', 'localização']);
+            
+            if (nameIndex === -1) {
+                console.warn(`Coluna de nome não encontrada em ${fileName}`);
+                return null;
+            }
+
+            const employees = [];
+            let areaTitle = areaMapping[fileName] || fileName.replace('.xlsx', '').replace('.xls', '');
+            let locations = '';
+
+            // Processar linhas de dados
+            for (let i = 1; i < data.length; i++) {
+                const row = data[i];
+                if (!row || row.length === 0) continue;
+
+                const name = (row[nameIndex] || '').toString().trim();
+                if (!name || name.toLowerCase() === 'nome') continue;
+
+                // Obter título da área se disponível na planilha
+                if (titleIndex !== -1 && row[titleIndex] && !areaTitle.includes('xlsx')) {
+                    const titleFromSheet = (row[titleIndex] || '').toString().trim();
+                    if (titleFromSheet && titleFromSheet.toLowerCase() !== 'titulo' && titleFromSheet.toLowerCase() !== 'area') {
+                        areaTitle = titleFromSheet;
+                    }
+                }
+
+                // Obter locais se disponível
+                if (locationIndex !== -1 && row[locationIndex] && !locations) {
+                    const locationFromSheet = (row[locationIndex] || '').toString().trim();
+                    if (locationFromSheet && locationFromSheet.toLowerCase() !== 'local' && locationFromSheet.toLowerCase() !== 'locais') {
+                        locations = locationFromSheet;
+                    }
+                }
+
+                employees.push({
+                    name: name,
+                    number: employees.length + 1
+                });
+            }
+
+            // Se não encontrou locais na planilha, usar padrão
+            if (!locations) {
+                locations = getDefaultLocations(areaTitle);
+            }
+
+            return {
+                areaTitle: areaTitle,
+                description: serviceDescriptions[areaTitle] || `Serviços de ${areaTitle.toLowerCase()}`,
+                locations: locations,
+                employees: employees
+            };
+        }
+
+        // Função auxiliar para encontrar índice da coluna
+        function findColumnIndex(headers, possibleNames) {
+            for (const name of possibleNames) {
+                const index = headers.findIndex(h => h.includes(name));
+                if (index !== -1) return index;
+            }
+            return -1;
+        }
+
+        // Função para obter locais padrão baseado no tipo de serviço
+        function getDefaultLocations(areaTitle) {
+            const defaultLocations = {
+                'Bombeiro Civil': 'Diversos prédios',
+                'Serviços de Copa': 'Sede',
+                'Serviços de Limpeza nos Prédios': 'Todos os prédios',
+                'Serviços de Locação de Veículos': 'Garagem Central',
+                'Serviços de Recepção': 'Prédios principais',
+                'Serviços de Transporte do Gabinete': 'Sede/Gabinete',
+                'Serviços de Vigilância Eletrônica': 'Central de monitoramento',
+                'Serviços de Vigilância Patrimonial': 'Todos os prédios',
+                'Serviços de Manutenção de Ar-Condicionado': 'Diversos prédios'
+            };
+            return defaultLocations[areaTitle] || 'Diversos locais';
+        }
+
+        // Função para gerar HTML
+        function generateHTML() {
+            const content = document.getElementById('mainContent');
+            let html = '';
+
+            // Ordenar seções por nome
+            const sortedSections = Object.entries(allEmployeeData).sort((a, b) => 
+                a[1].areaTitle.localeCompare(b[1].areaTitle)
+            );
+
+            sortedSections.forEach(([fileName, section]) => {
+                html += `
+                    <div class="area-section">
+                        <h2 class="area-title">${section.areaTitle}</h2>
+                        <div class="service-description">${section.description}</div>
+                        <div class="locations-line">${section.locations}</div>
+                        <div class="employees-section">
+                            <div class="employees-grid">`;
+
+                section.employees.forEach(employee => {
+                    html += `
+                        <div class="employee-item">
+                            <div class="employee-number">#${employee.number}</div>
+                            <div class="employee-name">${employee.name}</div>
+                        </div>`;
+                });
+
+                html += `
+                            </div>
+                        </div>
+                    </div>`;
+            });
+
+            content.innerHTML = html;
+            filteredData = { ...allEmployeeData };
+
+            // Aplicar funcionalidade de busca
+            applySearchFunctionality();
+        }
+
+        // Função para atualizar estatísticas
+        function updateStats() {
+            let totalEmployees = 0;
+            let totalAreas = Object.keys(allEmployeeData).length;
+            let allLocations = new Set();
+
+            Object.values(allEmployeeData).forEach(section => {
+                totalEmployees += section.employees.length;
+                
+                // Separar locais por vírgulas ou barras
+                const locations = section.locations.split(/[,\/]/).map(loc => loc.trim()).filter(loc => loc);
+                locations.forEach(loc => allLocations.add(loc));
+            });
+
+            document.getElementById('totalEmployees').textContent = totalEmployees;
+            document.getElementById('totalAreas').textContent = totalAreas;
+            document.getElementById('totalLocations').textContent = allLocations.size;
+        }
+
+        // Função de busca
+        function applySearchFunctionality() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                
+                if (!searchTerm) {
+                    // Mostrar todas as seções
+                    document.querySelectorAll('.area-section').forEach(section => {
+                        section.style.display = 'block';
+                        section.querySelectorAll('.employee-item').forEach(item => {
+                            item.style.display = 'flex';
+                            item.querySelector('.employee-name').innerHTML = 
+                                item.querySelector('.employee-name').textContent;
+                        });
+                    });
+                    return;
+                }
+
+                // Filtrar e destacar resultados
+                document.querySelectorAll('.area-section').forEach(section => {
+                    const areaTitle = section.querySelector('.area-title').textContent.toLowerCase();
+                    const locations = section.querySelector('.locations-line').textContent.toLowerCase();
+                    let hasVisibleEmployee = false;
+
+                    // Verificar funcionários
+                    section.querySelectorAll('.employee-item').forEach(item => {
+                        const name = item.querySelector('.employee-name').textContent.toLowerCase();
+                        const isVisible = name.includes(searchTerm);
+                        
+                        item.style.display = isVisible ? 'flex' : 'none';
+                        
+                        if (isVisible) {
+                            hasVisibleEmployee = true;
+                            // Destacar termo encontrado
+                            const nameElement = item.querySelector('.employee-name');
+                            const originalText = nameElement.textContent;
+                            const regex = new RegExp(`(${searchTerm})`, 'gi');
+                            nameElement.innerHTML = originalText.replace(regex, '<span class="highlight">$1</span>');
+                        }
+                    });
+
+                    // Mostrar seção se área ou local coincide com busca
+                    const sectionMatches = areaTitle.includes(searchTerm) || locations.includes(searchTerm);
+                    section.style.display = (hasVisibleEmployee || sectionMatches) ? 'block' : 'none';
+                    
+                    if (sectionMatches && !hasVisibleEmployee) {
+                        // Se a seção coincide mas não tem funcionários visíveis, mostrar todos
+                        section.querySelectorAll('.employee-item').forEach(item => {
+                            item.style.display = 'flex';
+                        });
+                    }
+                });
+            });
+        }
+
+        // Função para mostrar/esconder loading
+        function showLoading(show) {
+            const loading = document.getElementById('loadingDiv');
+            const content = document.getElementById('mainContent');
+            
+            if (show) {
+                loading.style.display = 'block';
+                content.style.display = 'none';
+            } else {
+                loading.style.display = 'none';
+                content.style.display = 'block';
+            }
+        }
+
+        // Função para mostrar mensagem de status
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.style.display = 'block';
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Funcionalidade de busca aplicada quando a página carrega
+        document.addEventListener('DOMContentLoaded', function() {
+            showStatus('👆 Selecione as 9 planilhas Excel para começar', 'info');
+        });
+    </script>
+</body>
+</html>
