@@ -310,22 +310,6 @@
             </div>
         </div>
 
-        <!-- Excel File Upload Section -->
-        <div class="excel-upload-container" style="text-align: center; margin: 20px 0; padding: 20px; background: rgba(255, 255, 255, 0.9); border-radius: 15px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);">
-            <h3 style="color: #2c3e50; margin-bottom: 15px;">📊 Atualizar Dados das Planilhas</h3>
-            <input type="file" id="excelFileInput" multiple accept=".xlsx,.xls" style="display: none;">
-            <button onclick="document.getElementById('excelFileInput').click()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 16px; margin: 5px;">
-                📁 Selecionar Planilhas Excel
-            </button>
-            <button onclick="loadAllExcelFiles()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 16px; margin: 5px;">
-                🔄 Carregar Automaticamente
-            </button>
-            <button onclick="resetToOriginal()" style="background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%); color: white; border: none; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 16px; margin: 5px;">
-                ↩️ Restaurar Original
-            </button>
-            <div id="loadingStatus" style="margin-top: 10px; font-style: italic; color: #666;"></div>
-        </div>
-
         <div class="content" id="mainContent">
             
             <div class="area-section">
