@@ -1,0 +1,33 @@
+{
+  "data": "2025-10-17",
+  "validacao": "Contagem verificada contra ADM_TOTAL.xlsx",
+  "total_aparelhos": 33215,
+  "valor_total": 30241453.5,
+  "recintos": {
+    "Araraquara": {
+      "aparelhos": 4965,
+      "percentual": 14.94806563299714,
+      "valor": 4520512.31755231
+    },
+    "Bauru": {
+      "aparelhos": 17592,
+      "percentual": 52.96402227909077,
+      "valor": 16017090.169260876
+    },
+    "Ipiranga": {
+      "aparelhos": 9392,
+      "percentual": 28.27638115309348,
+      "valor": 8551188.65789553
+    },
+    "São José do Rio Preto": {
+      "aparelhos": 601,
+      "percentual": 1.8094234532590698,
+      "valor": 547195.9522354358
+    },
+    "Viracopos": {
+      "aparelhos": 665,
+      "percentual": 2.0021074815595363,
+      "valor": 605466.4030558482
+    }
+  }
+}

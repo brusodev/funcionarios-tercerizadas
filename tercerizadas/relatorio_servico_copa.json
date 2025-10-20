@@ -1,0 +1,14 @@
+{
+  "nome": "Serviço de Copa",
+  "descricao": "Serviços de copa e cozinha nos prédios",
+  "total_funcionarios": 4,
+  "tipos_servico": [
+    "Serviço de copa no prédio"
+  ],
+  "locais_atendidos": [
+    "Sede"
+  ],
+  "funcionarios_por_local": {
+    "Sede": 4
+  }
+}

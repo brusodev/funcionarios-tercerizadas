@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "total_aparelhos": 26699,
+    "total_valor": "R$ 27,884,180.46",
+    "versao": "Contagem do Usuário (32.015)",
+    "observacoes": [
+      "Removidas 4 linhas de consolidação do PDF 0735",
+      "Removido 1 aparelho BLOQUEADO do PDF 0738",
+      "Removido 1 aparelho SEM EMBALAGEM do PDF 0738",
+      "Removido 1 aparelho SEM CAPACIDADE do PDF 0744",
+      "Inclusos 3 aparelhos em KG do PDF 0743"
+    ]
+  },
+  "por_recinto": {
+    "Bauru": {
+      "aparelhos": 15162,
+      "valor": "R$ 14,448,704.28",
+      "percentual_aparelhos": "56.8%",
+      "percentual_valor": "51.8%"
+    },
+    "Araraquara": {
+      "aparelhos": 880,
+      "valor": "R$ 866,834.47",
+      "percentual_aparelhos": "3.3%",
+      "percentual_valor": "3.1%"
+    },
+    "Ipiranga": {
+      "aparelhos": 9391,
+      "valor": "R$ 11,160,407.80",
+      "percentual_aparelhos": "35.2%",
+      "percentual_valor": "40.0%"
+    },
+    "Viracopos": {
+      "aparelhos": 665,
+      "valor": "R$ 1,134,423.76",
+      "percentual_aparelhos": "2.5%",
+      "percentual_valor": "4.1%"
+    },
+    "São José do Rio Preto": {
+      "aparelhos": 601,
+      "valor": "R$ 273,810.15",
+      "percentual_aparelhos": "2.3%",
+      "percentual_valor": "1.0%"
+    }
+  }
+}

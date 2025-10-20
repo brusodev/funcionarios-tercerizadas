@@ -1,0 +1,94 @@
+{
+  "0810500 - PRESIDENTE PRUDENTE": {
+    "quantidade": 12556,
+    "valor_total": 11019879.090000002,
+    "itens": 1379,
+    "pdfs": [
+      "ADM 0800100_0734_2025 de 30_09_2025.PDF",
+      "ADM 0800100_0735_2025 de 30_09_2025.PDF",
+      "ADM 0800100_0736_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0817900 - SÃO PAULO": {
+    "quantidade": 9386,
+    "valor_total": 121035907.15999994,
+    "itens": 7111,
+    "pdfs": [
+      "ADM 0800100_0744_2025 de 30_09_2025.PDF",
+      "ADM 0800100_0745_2025 de 30_09_2025.PDF",
+      "ADM 0800100_0746_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0810300 - BAURU": {
+    "quantidade": 4124,
+    "valor_total": 9437314.219999995,
+    "itens": 667,
+    "pdfs": [
+      "ADM 0800100_0747_2025 de 30092025.PDF"
+    ]
+  },
+  "0811000 - SOROCABA": {
+    "quantidade": 3708,
+    "valor_total": 63499.10999999999,
+    "itens": 3651,
+    "pdfs": [
+      "ADM 0800100_0739_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0817700 - AEROPORTO INTERNACIONAL DE VIRACOPOS": {
+    "quantidade": 888,
+    "valor_total": 21224477.459999997,
+    "itens": 388,
+    "pdfs": [
+      "ADM 0800100_0743_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0810700 - SÃO JOSÉ DO RIO PRETO": {
+    "quantidade": 616,
+    "valor_total": 3616.83,
+    "itens": 616,
+    "pdfs": [
+      "ADM 0800100_0737_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0810900 - RIBEIRÃO PRETO": {
+    "quantidade": 442,
+    "valor_total": 38862.299999999996,
+    "itens": 442,
+    "pdfs": [
+      "ADM 0800100_0738_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0812500 - PIRACICABA": {
+    "quantidade": 225,
+    "valor_total": 792.16,
+    "itens": 163,
+    "pdfs": [
+      "ADM 0800100_0742_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0812400 - JUNDIAÍ": {
+    "quantidade": 19,
+    "valor_total": 4826.46,
+    "itens": 19,
+    "pdfs": [
+      "ADM 0800100_0741_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0810200 - ARAÇATUBA": {
+    "quantidade": 13,
+    "valor_total": 53482.979999999996,
+    "itens": 2,
+    "pdfs": [
+      "ADM 0800100_0733_2025 de 30_09_2025.PDF"
+    ]
+  },
+  "0811200 - LIMEIRA": {
+    "quantidade": 6,
+    "valor_total": 5215.54,
+    "itens": 4,
+    "pdfs": [
+      "ADM 0800100_0740_2025 de 30_09_2025.PDF"
+    ]
+  }
+}

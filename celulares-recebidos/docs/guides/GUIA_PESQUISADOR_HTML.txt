@@ -1,0 +1,279 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                                                                                ║
+║                    PESQUISADOR DE MODELOS - GUIA DE USO                        ║
+║                                                                                ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+🎯 O QUE É?
+─────────────────────────────────────────────────────────────────────────────
+
+Um aplicativo WEB (HTML + JavaScript) totalmente funcional para pesquisar e 
+visualizar dados de modelos de celulares a partir dos Mega JSONs gerados.
+
+✨ CARACTERÍSTICAS:
+─────────────────────────────────────────────────────────────────────────────
+
+✓ Interface moderna e responsiva
+✓ Busca em tempo real por modelo
+✓ Filtro por ADM
+✓ Visualização de dados por ADM específico
+✓ Ranking dos 20 modelos mais comuns
+✓ Barras de progresso mostrando percentual
+✓ Design bonito com gradientes
+✓ Funciona em desktop, tablet e mobile
+✓ Sem necessidade de servidor - funciona localmente
+
+📂 ARQUIVOS NECESSÁRIOS
+─────────────────────────────────────────────────────────────────────────────
+
+Para funcionar, o HTML precisa dos seguintes arquivos no MESMO DIRETÓRIO:
+
+1. pesquisador_modelos.html ← O arquivo principal
+2. MEGA_JSON_MODELOS_SIMPLIFICADO.json ← Dados dos modelos
+3. MEGA_JSON_MODELOS_COMPLETO.json ← Dados completos com detalhes
+
+Estrutura de pastas (exemplo):
+```
+celulares-recebidos/
+├── pesquisador_modelos.html
+├── MEGA_JSON_MODELOS_SIMPLIFICADO.json
+└── MEGA_JSON_MODELOS_COMPLETO.json
+```
+
+🚀 COMO USAR
+─────────────────────────────────────────────────────────────────────────────
+
+OPÇÃO 1: Abrir no Navegador (Mais Fácil)
+──────────────────────────────────────────
+1. Localize o arquivo "pesquisador_modelos.html" no explorador
+2. Clique duas vezes para abrir no navegador padrão
+3. Pronto! O aplicativo carregará
+
+OPÇÃO 2: Arrastar e Soltar
+──────────────────────────
+1. Abra seu navegador (Chrome, Firefox, Edge, etc)
+2. Arraste o arquivo "pesquisador_modelos.html" para o navegador
+3. O aplicativo abrirá automaticamente
+
+OPÇÃO 3: Menu do Navegador
+──────────────────────────
+1. Abra seu navegador
+2. Use Ctrl+O (ou Cmd+O no Mac)
+3. Navegue até a pasta e selecione "pesquisador_modelos.html"
+4. Clique em Abrir
+
+📋 FUNCIONALIDADES DISPONÍVEIS
+─────────────────────────────────────────────────────────────────────────────
+
+1️⃣  ABA "BUSCAR MODELO"
+   ┌─────────────────────────────────────────────────────────┐
+   │ • Digite parte do nome do modelo (ex: XIAOMI)           │
+   │ • O sistema busca em tempo real                         │
+   │ • Filtre por ADM específico (opcional)                  │
+   │ • Veja quantidade total e distribuição por ADM          │
+   │ • Clique em "Limpar" para resetar a busca              │
+   └─────────────────────────────────────────────────────────┘
+
+   EXEMPLOS DE BUSCA:
+   ✓ "XIAOMI" - encontra todos os Xiaomi
+   ✓ "REDMI NOTE 13" - busca específica
+   ✓ "IPHONE" - todos os iPhones
+   ✓ "SAMSUNG" - todos os Samsung
+   ✓ "9900" - Blackberry 9900
+
+2️⃣  ABA "POR ADM"
+   ┌─────────────────────────────────────────────────────────┐
+   │ • Selecione um ADM da lista                             │
+   │ • Veja todos os modelos daquele ADM                     │
+   │ • Informações por linha                                 │
+   │ • Total de aparelhos e modelos únicos do ADM           │
+   └─────────────────────────────────────────────────────────┘
+
+   EXEMPLOS:
+   • ADM 733: 13 aparelhos
+   • ADM 734: 6.879 aparelhos
+   • ADM 744: 3.458 aparelhos (mais modelos diversos)
+
+3️⃣  ABA "TOP 20"
+   ┌─────────────────────────────────────────────────────────┐
+   │ • Ranking dos 20 modelos mais comuns                    │
+   │ • Quantidade de aparelhos de cada modelo                │
+   │ • Barra visual mostrando percentual                     │
+   │ • Cards com design moderno                              │
+   └─────────────────────────────────────────────────────────┘
+
+   TOP 3:
+   1. XIAOMI REDMI NOTE 12: 1.185 aparelhos (3.57%)
+   2. REALME C51: 1.071 aparelhos (3.22%)
+   3. REALME NOTE 50: 1.049 aparelhos (3.16%)
+
+🎨 DESIGN & INTERFACE
+─────────────────────────────────────────────────────────────────────────────
+
+CORES E ELEMENTOS:
+  • Gradiente Principal: Roxo (#667eea) para Azul (#764ba2)
+  • Background: Branco limpo com tons cinza suaves
+  • Acentos: Azul claro para links e tags
+  • Cards: Com sombra e efeito hover suave
+
+RESPONSIVIDADE:
+  ✓ Desktop (1200px+): Layout em grid com múltiplas colunas
+  ✓ Tablet (768px): Ajustes automáticos
+  ✓ Mobile (< 768px): Coluna única, tudo otimizado
+
+ESTATÍSTICAS:
+  • Exibe total de aparelhos
+  • Exibe modelos únicos
+  • Exibe ADMs processados
+  • Exibe valor total
+
+💡 DICAS DE USO
+─────────────────────────────────────────────────────────────────────────────
+
+1. BUSCA RÁPIDA:
+   - Não precisa digitar tudo - basta parte do modelo
+   - Busca é case-insensitive (maiúscula ou minúscula)
+   - Resultado atualiza conforme digita
+
+2. FILTRO POR ADM:
+   - Use quando buscar um modelo em ADM específico
+   - Combina com a busca por texto
+   - Deixe em branco para buscar em todos
+
+3. TOP 20:
+   - Ótimo para entender quais são os modelos mais comuns
+   - As barras de progresso mostram importância
+   - Clique na aba para atualizar a visualização
+
+4. NAVEGAÇÃO:
+   - Use as 3 abas para diferentes tipos de consulta
+   - Os filtros só afetam a aba "Buscar Modelo"
+   - Mude de aba quantas vezes quiser
+
+⚠️ REQUISITOS DO NAVEGADOR
+─────────────────────────────────────────────────────────────────────────────
+
+Navegadores Compatíveis:
+  ✓ Chrome 60+
+  ✓ Firefox 55+
+  ✓ Safari 12+
+  ✓ Edge 79+
+  ✓ Opera 47+
+
+Requisitos Mínimos:
+  • JavaScript habilitado (padrão em navegadores modernos)
+  • Suporte a Fetch API
+  • Suporte a CSS Grid e Flexbox
+
+❌ SOLUÇÃO DE PROBLEMAS
+─────────────────────────────────────────────────────────────────────────────
+
+PROBLEMA: "Erro ao carregar os arquivos JSON"
+SOLUÇÃO:
+  1. Certifique-se que os 3 arquivos estão no MESMO diretório
+  2. Verifique os nomes dos arquivos (case-sensitive no Linux/Mac)
+  3. Tente reabrir o HTML
+  4. Limpe o cache do navegador (Ctrl+Shift+Del)
+
+PROBLEMA: Interface muito lenta
+SOLUÇÃO:
+  1. Feche outras abas do navegador
+  2. Tente em outro navegador
+  3. Reinicie o navegador
+
+PROBLEMA: Botões não funcionam
+SOLUÇÃO:
+  1. Ative JavaScript (verifique nas configurações)
+  2. Tente recarregar a página (F5)
+  3. Limpe cookies/cache
+
+📊 DADOS INCLUÍDOS
+─────────────────────────────────────────────────────────────────────────────
+
+Total de Aparelhos: 33.215
+Modelos Únicos: 8.220
+ADMs: 15 (0733 a 0747)
+Valor Total: R$ 30.241.453,50
+
+Maior ADM: 0734 com 6.879 aparelhos
+Menor ADM: 0740 com 9 aparelhos
+
+Modelo Mais Comum: XIAOMI REDMI NOTE 12 (1.185 un)
+Modelo Mais Raro: Vários com 1 aparelho apenas
+
+🔧 PERSONALIZAÇÃO (Avançado)
+─────────────────────────────────────────────────────────────────────────────
+
+Se quiser modificar as cores:
+
+No arquivo HTML, procure por:
+  #667eea   → Cor roxo principal
+  #764ba2   → Cor azul gradiente
+  #333      → Cor de texto principal
+
+E substitua pelos valores desejados.
+
+Exemplo mudando para verde:
+  #667eea → #4CAF50
+  #764ba2 → #45a049
+
+✅ VALIDAÇÃO DOS DADOS
+─────────────────────────────────────────────────────────────────────────────
+
+✓ Todos os dados foram comparados com o arquivo ADM_TOTAL.xlsx
+✓ Total validado: 33.215 aparelhos
+✓ Valor validado: R$ 30.241.453,50
+✓ 14 de 15 PDFs com 100% de correspondência
+✓ PDF 0743 com 912 aparelhos (validado com conversão de KG)
+✓ Distribuição por recinto verificada
+✓ Modelos agrupados e normalizados
+
+📱 RESPONSIVE DESIGN
+─────────────────────────────────────────────────────────────────────────────
+
+DESKTOP (1200px+):
+  ☑ Menu em linha
+  ☑ Resultados em múltiplas colunas
+  ☑ Stats lado a lado
+
+TABLET (768px a 1199px):
+  ☑ Menu condensado
+  ☑ Resultados em 2 colunas
+  ☑ Stats em grid 2x2
+
+MOBILE (< 768px):
+  ☑ Menu vertical
+  ☑ Resultados em 1 coluna
+  ☑ Stats empilhadas
+  ☑ Touch-friendly buttons
+
+🎓 EXEMPLOS DE USO
+─────────────────────────────────────────────────────────────────────────────
+
+CASO 1: Contar Xiaomi no ADM 734
+  1. Abra o HTML
+  2. Na aba "Buscar Modelo"
+  3. Digite "XIAOMI"
+  4. Selecione ADM 734 no filtro
+  5. Clique em "Pesquisar"
+  → Resultado: Todos os Xiaomi do ADM 734
+
+CASO 2: Ver todos os modelos do ADM 744
+  1. Clique na aba "Por ADM"
+  2. Selecione "ADM 744"
+  3. Pressione Enter ou aguarde
+  → Resultado: Lista completa com 3.458 aparelhos
+
+CASO 3: Entender distribuição de marcas
+  1. Clique na aba "Top 20"
+  2. Analise os modelos mais comuns
+  3. Identifique marcas dominantes
+  → Resultado: Xiaomi, Realme e Motorola são maioria
+
+════════════════════════════════════════════════════════════════════════════════
+
+Versão: 1.0
+Data: 17/10/2025
+Desenvolvido para: Gestão de Inventário de Aparelhos Celulares
+
+════════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,28 @@
+{
+  "total": {
+    "aparelhos": 26697,
+    "valor": "R$ 27,884,180.46"
+  },
+  "por_recinto": {
+    "Bauru": {
+      "aparelhos": 15162,
+      "valor": "R$ 14,448,890.08"
+    },
+    "Araraquara": {
+      "aparelhos": 880,
+      "valor": "R$ 868,039.29"
+    },
+    "São José": {
+      "aparelhos": 601,
+      "valor": "R$ 273,810.15"
+    },
+    "Viracopos": {
+      "aparelhos": 662,
+      "valor": "R$ 1,133,033.14"
+    },
+    "Ipiranga": {
+      "aparelhos": 9392,
+      "valor": "R$ 11,160,407.80"
+    }
+  }
+}

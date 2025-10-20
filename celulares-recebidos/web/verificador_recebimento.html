@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificador de Recebimento - Celulares</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .button-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .button-secondary:hover {
+            background: #e0e0e0;
+            border-color: #999;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            width: auto;
+        }
+
+        .delete-btn:hover {
+            background: #ff5252;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .model-entry {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .model-entry strong {
+            color: #667eea;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .recinto-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin: 5px 5px 5px 0;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .export-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-export {
+            background: #28a745;
+            font-size: 0.9em;
+            padding: 10px;
+        }
+
+        .btn-export:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Verificador de Recebimento</h1>
+            <p>Controle simples e rápido de celulares recebidos</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Coluna Esquerda: Entrada de Dados -->
+            <div class="card">
+                <h2>📝 Novo Aparelho</h2>
+                
+                <div class="success-message" id="successMessage">
+                    ✅ Aparelho adicionado com sucesso!
+                </div>
+                <div class="error-message" id="errorMessage">
+                    ❌ Erro! Preenchha todos os campos.
+                </div>
+
+                <div class="form-group">
+                    <label>Modelo do Aparelho *</label>
+                    <input type="text" id="modelo" placeholder="Ex: iPhone 12, Samsung Galaxy A50" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantidade *</label>
+                    <input type="number" id="quantidade" min="1" value="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Condição *</label>
+                    <select id="condicao" required>
+                        <option value="">-- Selecione --</option>
+                        <option value="Novo">Novo</option>
+                        <option value="Bom">Bom</option>
+                        <option value="Usado">Usado</option>
+                        <option value="Com Defeito">Com Defeito</option>
+                        <option value="Danificado">Danificado</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Recinto</label>
+                    <select id="recinto">
+                        <option value="">-- Selecione --</option>
+                        <option value="Bauru">Bauru</option>
+                        <option value="Ipiranga">Ipiranga</option>
+                        <option value="Araraquara">Araraquara</option>
+                        <option value="Viracopos">Viracopos</option>
+                        <option value="São José do Rio Preto">São José do Rio Preto</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Observações</label>
+                    <input type="text" id="observacoes" placeholder="Ex: Falta carregador, tela com riscos">
+                </div>
+
+                <button onclick="adicionarAparelho()">➕ Adicionar Aparelho</button>
+
+                <div class="button-group" style="margin-top: 15px;">
+                    <button class="button-secondary" onclick="limparFormulario()">🔄 Limpar</button>
+                    <button class="button-secondary" onclick="limparTodos()">🗑️ Limpar Tudo</button>
+                </div>
+            </div>
+
+            <!-- Coluna Direita: Resumo e Estatísticas -->
+            <div class="card">
+                <h2>📊 Resumo do Recebimento</h2>
+                
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Total de Aparelhos</div>
+                        <div class="stat-value" id="totalAparelhos">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Modelos Diferentes</div>
+                        <div class="stat-value" id="totalModelos">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Em Bom Estado</div>
+                        <div class="stat-value" id="totalBom">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Com Problemas</div>
+                        <div class="stat-value" id="totalProblemas">0</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 25px; color: #667eea; font-size: 1.2em;">Aparelhos por Condição:</h3>
+                <div style="margin-top: 15px;">
+                    <div id="condicaoBreakdown" style="display: grid; gap: 10px;"></div>
+                </div>
+
+                <div class="export-buttons">
+                    <button class="btn-export" onclick="exportarCSV()">📥 CSV</button>
+                    <button class="btn-export" onclick="exportarJSON()">📥 JSON</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela de Aparelhos Completa -->
+        <div class="card full-width">
+            <h2>📋 Aparelhos Registrados</h2>
+            
+            <div id="emptyState" class="empty-state">
+                <div class="empty-state-icon">📭</div>
+                <p>Nenhum aparelho registrado ainda. Comece adicionando um!</p>
+            </div>
+
+            <div class="table-container" id="tableContainer" style="display: none;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Modelo</th>
+                            <th>Qtd</th>
+                            <th>Condição</th>
+                            <th>Recinto</th>
+                            <th>Observações</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let aparelhos = JSON.parse(localStorage.getItem('aparelhos')) || [];
+
+        function adicionarAparelho() {
+            const modelo = document.getElementById('modelo').value.trim();
+            const quantidade = parseInt(document.getElementById('quantidade').value);
+            const condicao = document.getElementById('condicao').value;
+            const recinto = document.getElementById('recinto').value;
+            const observacoes = document.getElementById('observacoes').value.trim();
+
+            const errorMsg = document.getElementById('errorMessage');
+            const successMsg = document.getElementById('successMessage');
+
+            if (!modelo || !quantidade || !condicao) {
+                errorMsg.style.display = 'block';
+                setTimeout(() => errorMsg.style.display = 'none', 3000);
+                return;
+            }
+
+            aparelhos.push({
+                id: Date.now(),
+                modelo,
+                quantidade,
+                condicao,
+                recinto: recinto || 'Não especificado',
+                observacoes,
+                data: new Date().toLocaleString('pt-BR')
+            });
+
+            localStorage.setItem('aparelhos', JSON.stringify(aparelhos));
+            limparFormulario();
+            atualizarTabela();
+
+            successMsg.style.display = 'block';
+            setTimeout(() => successMsg.style.display = 'none', 3000);
+        }
+
+        function limparFormulario() {
+            document.getElementById('modelo').value = '';
+            document.getElementById('quantidade').value = '1';
+            document.getElementById('condicao').value = '';
+            document.getElementById('recinto').value = '';
+            document.getElementById('observacoes').value = '';
+            document.getElementById('modelo').focus();
+        }
+
+        function limparTodos() {
+            if (confirm('Tem certeza que deseja limpar TODOS os dados? Esta ação não pode ser desfeita.')) {
+                aparelhos = [];
+                localStorage.removeItem('aparelhos');
+                atualizarTabela();
+            }
+        }
+
+        function deletarAparelho(id) {
+            if (confirm('Tem certeza que deseja deletar este aparelho?')) {
+                aparelhos = aparelhos.filter(a => a.id !== id);
+                localStorage.setItem('aparelhos', JSON.stringify(aparelhos));
+                atualizarTabela();
+            }
+        }
+
+        function atualizarTabela() {
+            const tableBody = document.getElementById('tableBody');
+            const tableContainer = document.getElementById('tableContainer');
+            const emptyState = document.getElementById('emptyState');
+
+            tableBody.innerHTML = '';
+
+            if (aparelhos.length === 0) {
+                tableContainer.style.display = 'none';
+                emptyState.style.display = 'block';
+            } else {
+                tableContainer.style.display = 'block';
+                emptyState.style.display = 'none';
+
+                aparelhos.forEach((app, index) => {
+                    const row = `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td><strong>${app.modelo}</strong></td>
+                            <td>${app.quantidade}</td>
+                            <td><span class="recinto-tag">${app.condicao}</span></td>
+                            <td>${app.recinto}</td>
+                            <td>${app.observacoes || '-'}</td>
+                            <td><button class="delete-btn" onclick="deletarAparelho(${app.id})">🗑️ Deletar</button></td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            }
+
+            atualizarEstatisticas();
+        }
+
+        function atualizarEstatisticas() {
+            const totalAparelhos = aparelhos.reduce((acc, a) => acc + a.quantidade, 0);
+            const totalModelos = aparelhos.length;
+            const totalBom = aparelhos
+                .filter(a => ['Novo', 'Bom'].includes(a.condicao))
+                .reduce((acc, a) => acc + a.quantidade, 0);
+            const totalProblemas = aparelhos
+                .filter(a => ['Com Defeito', 'Danificado'].includes(a.condicao))
+                .reduce((acc, a) => acc + a.quantidade, 0);
+
+            document.getElementById('totalAparelhos').textContent = totalAparelhos.toLocaleString('pt-BR');
+            document.getElementById('totalModelos').textContent = totalModelos;
+            document.getElementById('totalBom').textContent = totalBom;
+            document.getElementById('totalProblemas').textContent = totalProblemas;
+
+            // Breakdown por condição
+            const condicaoMap = {};
+            aparelhos.forEach(a => {
+                condicaoMap[a.condicao] = (condicaoMap[a.condicao] || 0) + a.quantidade;
+            });
+
+            const breakdown = Object.entries(condicaoMap)
+                .map(([cond, qty]) => `<div style="padding: 8px; background: #f0f0f0; border-radius: 5px; margin-bottom: 5px;">
+                    <strong>${cond}:</strong> ${qty} aparelhos
+                </div>`)
+                .join('');
+
+            document.getElementById('condicaoBreakdown').innerHTML = breakdown || '<p style="color: #999;">Nenhum dado</p>';
+        }
+
+        function exportarCSV() {
+            if (aparelhos.length === 0) {
+                alert('Nenhum aparelho para exportar!');
+                return;
+            }
+
+            let csv = 'Modelo,Quantidade,Condição,Recinto,Observações,Data\n';
+            aparelhos.forEach(app => {
+                csv += `"${app.modelo}",${app.quantidade},"${app.condicao}","${app.recinto}","${app.observacoes}","${app.data}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `recebimento_celulares_${new Date().toISOString().split('T')[0]}.csv`);
+            link.click();
+        }
+
+        function exportarJSON() {
+            if (aparelhos.length === 0) {
+                alert('Nenhum aparelho para exportar!');
+                return;
+            }
+
+            const resumo = {
+                data_exportacao: new Date().toLocaleString('pt-BR'),
+                total_aparelhos: aparelhos.reduce((acc, a) => acc + a.quantidade, 0),
+                total_modelos: aparelhos.length,
+                aparelhos: aparelhos
+            };
+
+            const blob = new Blob([JSON.stringify(resumo, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `recebimento_celulares_${new Date().toISOString().split('T')[0]}.json`);
+            link.click();
+        }
+
+        // Inicializar ao carregar a página
+        window.addEventListener('load', () => {
+            atualizarTabela();
+        });
+
+        // Permitir Enter para enviar
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('observacoes').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    adicionarAparelho();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "Araraquara": {
+    "descricao": "Regional DMA - Araraquara",
+    "quantidade": 16973,
+    "valor_total": 13770510.76,
+    "num_pdfs": 8,
+    "pdfs": [
+      "ADM 0800100_0734_2025",
+      "ADM 0800100_0735_2025",
+      "ADM 0800100_0736_2025",
+      "ADM 0800100_0738_2025",
+      "ADM 0800100_0739_2025",
+      "ADM 0800100_0740_2025",
+      "ADM 0800100_0741_2025",
+      "ADM 0800100_0742_2025"
+    ]
+  },
+  "São Paulo": {
+    "descricao": "DMA Ipiranga",
+    "quantidade": 9392,
+    "valor_total": 11160407.8,
+    "num_pdfs": 3,
+    "pdfs": [
+      "ADM 0800100_0744_2025",
+      "ADM 0800100_0745_2025",
+      "ADM 0800100_0746_2025"
+    ]
+  },
+  "Bauru": {
+    "descricao": "Depósito DINAMO INTER-AGRICOLA LTDA",
+    "quantidade": 4137,
+    "valor_total": 3474109.77,
+    "num_pdfs": 2,
+    "pdfs": [
+      "ADM 0800100_0733_2025",
+      "ADM 0800100_0747_2025"
+    ]
+  },
+  "VIRACOPOS": {
+    "descricao": "Aeroporto Internacional de Viracopos - ABV",
+    "quantidade": 909,
+    "valor_total": 1555781.16,
+    "num_pdfs": 1,
+    "pdfs": [
+      "ADM 0800100_0743_2025"
+    ]
+  },
+  "São José do Rio Preto": {
+    "descricao": "SAPOL São José do Rio Preto",
+    "quantidade": 616,
+    "valor_total": 280644.01,
+    "num_pdfs": 1,
+    "pdfs": [
+      "ADM 0800100_0737_2025"
+    ]
+  }
+}

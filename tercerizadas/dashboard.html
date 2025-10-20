@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Serviços Terceirizados</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .areas-section {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #343a40;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 300;
+        }
+
+        .areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .area-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .area-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .area-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .area-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .area-description {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .area-content {
+            padding: 25px;
+        }
+
+        .area-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .area-stat {
+            text-align: center;
+        }
+
+        .area-stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .area-stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+
+        .locations-list {
+            margin-top: 20px;
+        }
+
+        .locations-title {
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .location-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .location-item:last-child {
+            border-bottom: none;
+        }
+
+        .location-name {
+            color: #495057;
+        }
+
+        .location-count {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .refresh-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #6c757d;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .areas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 Dashboard de Serviços Terceirizados</h1>
+            <p>Gestão e controle de áreas de atuação</p>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Carregando dados...</p>
+        </div>
+
+        <div id="content" style="display: none;">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalAreas">-</div>
+                    <div class="stat-label">Áreas Cadastradas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalFuncionarios">-</div>
+                    <div class="stat-label">Total de Funcionários</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="areasComDados">-</div>
+                    <div class="stat-label">Áreas Ativas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalLocais">-</div>
+                    <div class="stat-label">Locais Atendidos</div>
+                </div>
+            </div>
+
+            <div class="areas-section">
+                <h2 class="section-title">Áreas de Atuação</h2>
+                <div class="areas-grid" id="areasGrid">
+                    <!-- Áreas serão carregadas via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="refresh-btn" onclick="carregarDados()">
+        🔄 Atualizar
+    </button>
+
+    <script>
+        // Simular dados (em produção, viria de uma API ou arquivo JSON)
+        const dadosServicos = {
+            "resumo_geral": {
+                "total_areas": 4,
+                "total_funcionarios": 67,
+                "areas_com_dados": 2
+            },
+            "areas": {
+                "manutencao_predios": {
+                    "nome": "Manutenção de Prédios",
+                    "descricao": "Serviços de manutenção predial corretiva e preventiva",
+                    "total_funcionarios": 63,
+                    "tipos_servico": ["Serviço de manutenção predial corretiva e preventiva nos prédios"],
+                    "locais_atendidos": ["Sede", "Arouche", "Efape", "Casa Verde", "Cape", "Rio Branco", "São Domingos", "Armênia"],
+                    "funcionarios_por_local": {
+                        "Sede": 63,
+                        "Arouche": 63,
+                        "Efape": 63,
+                        "Casa Verde": 63,
+                        "Cape": 63,
+                        "Rio Branco": 63,
+                        "São Domingos": 63,
+                        "Armênia": 63
+                    }
+                },
+                "servico_copa": {
+                    "nome": "Serviço de Copa",
+                    "descricao": "Serviços de copa e cozinha nos prédios",
+                    "total_funcionarios": 4,
+                    "tipos_servico": ["Serviço de copa no prédio"],
+                    "locais_atendidos": ["Sede"],
+                    "funcionarios_por_local": {
+                        "Sede": 4
+                    }
+                },
+                "seguranca_acesso": {
+                    "nome": "Segurança e Controle de Acesso",
+                    "descricao": "Serviços de segurança patrimonial e controle de acesso",
+                    "total_funcionarios": 0,
+                    "tipos_servico": [],
+                    "locais_atendidos": [],
+                    "funcionarios_por_local": {}
+                },
+                "transporte": {
+                    "nome": "Transporte",
+                    "descricao": "Serviços de transporte e motoristas",
+                    "total_funcionarios": 0,
+                    "tipos_servico": [],
+                    "locais_atendidos": [],
+                    "funcionarios_por_local": {}
+                }
+            }
+        };
+
+        function carregarDados() {
+            // Simular carregamento
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('content').style.display = 'none';
+
+            setTimeout(() => {
+                preencherDashboard(dadosServicos);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+            }, 1000);
+        }
+
+        function preencherDashboard(dados) {
+            // Preencher estatísticas gerais
+            document.getElementById('totalAreas').textContent = dados.resumo_geral.total_areas;
+            document.getElementById('totalFuncionarios').textContent = dados.resumo_geral.total_funcionarios;
+            document.getElementById('areasComDados').textContent = dados.resumo_geral.areas_com_dados;
+            
+            // Calcular total de locais únicos
+            const locaisUnicos = new Set();
+            Object.values(dados.areas).forEach(area => {
+                area.locais_atendidos.forEach(local => locaisUnicos.add(local));
+            });
+            document.getElementById('totalLocais').textContent = locaisUnicos.size;
+
+            // Preencher áreas
+            const areasGrid = document.getElementById('areasGrid');
+            areasGrid.innerHTML = '';
+
+            Object.entries(dados.areas).forEach(([chave, area]) => {
+                const areaCard = criarCardArea(area);
+                areasGrid.appendChild(areaCard);
+            });
+        }
+
+        function criarCardArea(area) {
+            const card = document.createElement('div');
+            card.className = 'area-card';
+
+            const temDados = area.total_funcionarios > 0;
+            const statusIcon = temDados ? '✅' : '⏳';
+
+            card.innerHTML = `
+                <div class="area-header">
+                    <div class="area-title">${statusIcon} ${area.nome}</div>
+                    <div class="area-description">${area.descricao}</div>
+                </div>
+                <div class="area-content">
+                    ${temDados ? `
+                        <div class="area-stats">
+                            <div class="area-stat">
+                                <div class="area-stat-number">${area.total_funcionarios}</div>
+                                <div class="area-stat-label">Funcionários</div>
+                            </div>
+                            <div class="area-stat">
+                                <div class="area-stat-number">${area.locais_atendidos.length}</div>
+                                <div class="area-stat-label">Locais</div>
+                            </div>
+                            <div class="area-stat">
+                                <div class="area-stat-number">${area.tipos_servico.length}</div>
+                                <div class="area-stat-label">Serviços</div>
+                            </div>
+                        </div>
+                        <div class="locations-list">
+                            <div class="locations-title">📍 Locais de Atuação</div>
+                            ${Object.entries(area.funcionarios_por_local).map(([local, count]) => `
+                                <div class="location-item">
+                                    <span class="location-name">${local}</span>
+                                    <span class="location-count">${count}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : `
+                        <div class="no-data">
+                            📋 Template criado - aguardando preenchimento dos dados
+                        </div>
+                    `}
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Carregar dados ao inicializar a página
+        window.addEventListener('load', () => {
+            carregarDados();
+        });
+
+        // Atualizar automaticamente a cada 5 minutos
+        setInterval(carregarDados, 5 * 60 * 1000);
+    </script>
+</body>
+</html>

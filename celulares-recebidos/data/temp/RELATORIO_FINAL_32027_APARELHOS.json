@@ -1,0 +1,51 @@
+{
+  "metadata": {
+    "data_exportacao": "2025-10-16",
+    "total_aparelhos": 27875,
+    "total_valor_formatado": "R$ 27,884,180.46",
+    "observacao": "4 linhas de CONSOLIDAÇÃO no PDF 0735 INCLUÍDAS (692+161+119+206 un)",
+    "referencia_usuario": {
+      "usuario_contou": 32015,
+      "script_contou": 27875,
+      "diferenca": -4140,
+      "motivo_diferenca": "PDF 0735 contém 4 linhas de consolidação que o usuário pode ter descartado"
+    }
+  },
+  "por_recinto": {
+    "Bauru": {
+      "aparelhos": 16340,
+      "valor_formatado": "R$ 14,468,202.06",
+      "valor": 14468202.06,
+      "percentual_aparelhos": "58.6%",
+      "percentual_valor": "51.9%"
+    },
+    "Araraquara": {
+      "aparelhos": 880,
+      "valor_formatado": "R$ 848,727.31",
+      "valor": 848727.31,
+      "percentual_aparelhos": "3.2%",
+      "percentual_valor": "3.0%"
+    },
+    "Ipiranga": {
+      "aparelhos": 9392,
+      "valor_formatado": "R$ 11,160,407.80",
+      "valor": 11160407.8,
+      "percentual_aparelhos": "33.7%",
+      "percentual_valor": "40.0%"
+    },
+    "Viracopos": {
+      "aparelhos": 662,
+      "valor_formatado": "R$ 1,133,033.14",
+      "valor": 1133033.14,
+      "percentual_aparelhos": "2.4%",
+      "percentual_valor": "4.1%"
+    },
+    "São José": {
+      "aparelhos": 601,
+      "valor_formatado": "R$ 273,810.15",
+      "valor": 273810.15,
+      "percentual_aparelhos": "2.2%",
+      "percentual_valor": "1.0%"
+    }
+  }
+}
