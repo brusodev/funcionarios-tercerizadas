@@ -50,13 +50,29 @@ def update_index_html():
         print("❌ Não foi possível encontrar o local de inserção no index.html")
         return False
 
-    # Inserir as seções antes do footer
-    insert_position = match.start(1)
-    updated_content = (
-        index_content[:insert_position] +
-        sections_content +
-        index_content[insert_position:]
-    )
+    # Remover seções existentes (entre o mainContent e o footer)
+    # Padrão para encontrar o início das seções (após o mainContent)
+    content_start_pattern = r'(\s*<div class="content" id="mainContent">\s*)'
+    content_match = re.search(content_start_pattern, index_content)
+
+    if content_match:
+        # Remover todo o conteúdo entre o início do mainContent e o início do footer
+        start_pos = content_match.end(1)
+        end_pos = match.start(1)
+        updated_content = (
+            index_content[:start_pos] +
+            sections_content +
+            index_content[end_pos:]
+        )
+        print("✅ Seções antigas removidas e novas inseridas")
+    else:
+        # Fallback: apenas inserir antes do footer (pode causar duplicatas)
+        print("⚠️  Não foi possível encontrar o início do mainContent, inserindo apenas antes do footer")
+        updated_content = (
+            index_content[:match.start(1)] +
+            sections_content +
+            index_content[match.start(1):]
+        )
 
     # Salvar o arquivo atualizado
     with open(index_file, 'w', encoding='utf-8') as f:
