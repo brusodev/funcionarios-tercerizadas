@@ -1,0 +1,11 @@
+# Sistema de Gerenciamento de Funcionários Terceirizados
+# Arquivo de dependências Python
+
+# Processamento de dados
+pandas>=1.5.0
+openpyxl>=3.0.0
+
+# Desenvolvimento (opcional)
+# pytest>=7.0.0
+# black>=22.0.0
+# flake8>=4.0.0

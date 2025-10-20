@@ -1,0 +1,44 @@
+# Arquivos temporários
+*.tmp
+*.temp
+*.log
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Arquivos do Node.js (se aplicável)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos do VS Code
+.vscode/settings.json
+.vscode/launch.json
+
+# Backups e arquivos antigos (já temos uma pasta backup/)
+*backup*
+*old*
+*temp*
+
+# Arquivos de dados sensíveis (se aplicável)
+*.db
+*.sqlite
+*.sqlite3
+
+# Arquivos de configuração local
+config/local.*
+*.local
